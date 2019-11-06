@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
+  before_action :set_user, only: [:index, :create]
 
   def index
-    @user = User.find(params[:user_id])
     @tasks = Task.where(user_id: params[:user_id])
   end
   
@@ -10,17 +10,12 @@ class TasksController < ApplicationController
   end
   
   def create # 投稿ユーザーと投稿タスクの紐付けが謎
-    @user = User.find(params[:user_id])
-    @task = Task.new(
-      task_params,
-      user_id: @current_user.id
-      )
-      
+    @task = Task.new(task_params)
     if @task.save
       flash[:success]="タスクを新規作成しました。"
       redirect_to user_tasks_url(@user)
     else
-      render new
+      render :new
     end
   end
   
@@ -31,5 +26,8 @@ class TasksController < ApplicationController
       params.require(:task).permit(:title, :content, :user_id) # このuser_idもいるのか？
     end
   
+   def set_user
+     @user = User.find(params[:user_id])
+   end
 end
 
