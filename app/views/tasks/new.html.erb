@@ -9,10 +9,10 @@
         
         <%= f.label :title, class: "label-new-task" %>
         <%= f.text_field :title, class: "form-control" %>
-      
+        <div class="content">
         <%= f.label :content, class: "label-new-task" %>
-        <%= f.text_field :content, class: "form-control" %>
-        
+        <%= f.text_area :content, class: "form-control" %>
+        </div> 
         <%= f.submit "新規作成", class: "btn btn-primary btn-new-task" %>
       <% end %>
     </div>
