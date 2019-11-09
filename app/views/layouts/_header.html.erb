@@ -15,7 +15,7 @@
               <li><%= link_to "Show", current_user %></li>
               <li><%= link_to "Settings", '#' %></li>
               <li class="dropdown-header">タスク</li>
-              <li><%= link_to "タスク一覧", user_tasks_path %></li>
+              <li><%= link_to "タスク一覧", user_tasks_path(@current_user) %></li>
               <li class="divider"></li>
               <li><%= link_to "Log out", logout_path, method: :delete %></li>
             </ul>

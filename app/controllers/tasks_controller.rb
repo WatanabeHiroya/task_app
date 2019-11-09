@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_user, only: [:index, :create, :new]
+  before_action :set_user, only: [:index, :create, :new, :edit, :update]
 
   def index
   # @tasks = @user.tasks.all
@@ -19,6 +19,19 @@ class TasksController < ApplicationController
       redirect_to user_tasks_url(@user)
     else
       render :new
+    end
+  end
+  
+  def edit
+    @task = Task.find(params[:id])
+  end
+  
+  def update
+    @task = Task.find(params[:id])
+    if @task.update_attributes(task_params)
+      redirect_to @user
+    else
+      render :edit
     end
   end
   
