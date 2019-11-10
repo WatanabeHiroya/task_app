@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_user, only: [:index, :create, :new, :edit, :update]
+  before_action :set_user, only: [:index, :create, :new, :edit, :update, :show, :destroy]
 
   def index
   # @tasks = @user.tasks.all
@@ -29,10 +29,22 @@ class TasksController < ApplicationController
   def update
     @task = Task.find(params[:id])
     if @task.update_attributes(task_params)
-      redirect_to @user
+      flash[:success]="タスクを更新しました。"
+      redirect_to user_tasks_url(@user)
     else
       render :edit
     end
+  end
+  
+  def show
+    @task = Task.find(params[:id])
+  end
+  
+  def destroy
+    @task = Task.find(params[:id])
+    @task.destroy
+    flash[:success] = "タスクを削除しました。"
+    redirect_to user_tasks_url(@user)
   end
   
   
