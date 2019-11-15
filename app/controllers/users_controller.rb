@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :update]
   
   def show
   end
@@ -16,6 +16,18 @@ class UsersController < ApplicationController
       redirect_to @user
     else
       render :new
+    end
+  end
+  
+  def edit
+  end
+  
+  def update
+    if @user.update_attributes(user_params)
+      flash[:success] = "ユーザー情報を更新しました。"
+      redirect_to @user
+    else
+      render :edit
     end
   end
   
