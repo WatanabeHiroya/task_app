@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy, :update]
-  before_action :logged_in_user, only: [:index, :show, :edit, :update]
+  before_action :logged_in_user, only: [:index, :show, :edit, :update, :destroy]
+  before_action :admin_user, only: :destro
   
   def show
   end
@@ -34,6 +35,13 @@ class UsersController < ApplicationController
   
   def index
     @users = User.paginate(page: params[:page], per_page: 20)
+    
+  end
+  
+  def destroy
+    @user.destroy
+    flash[:success] = "#{@user.name}のデータを削除しました。"
+    redirect_to users_url
   end
   
   private
@@ -53,5 +61,9 @@ class UsersController < ApplicationController
       end
     end
     
+    # システム管理権限所有者かどうか判定
+    def admin_user
+      redirect_to root_url unless current_user.admin?
+    end
     
 end
