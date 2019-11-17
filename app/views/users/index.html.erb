@@ -3,6 +3,7 @@
 <h1>利用者一覧</h1>
 
 <div class="col-md-10 col-md-offset-1">
+  <%= will_paginate %>
   <table class="table table-condensed table-hover" id="table-users">
     <thead>
       <tr>
@@ -12,8 +13,16 @@
     
     <% @users.each do |user| %>
       <tr>
-        <td><%= link_to user.name, user %></td>
+        <td>
+          <%= link_to user.name, user %>
+          <% if user.admin?%>
+            <span class="label label-primary label-user-division">管理者</span>
+          <% else %>
+            <span class="label label-success label-user-division">一般</span>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </table>
+  <%= will_paginate %>
 </div>
